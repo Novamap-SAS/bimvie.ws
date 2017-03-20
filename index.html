@@ -70,7 +70,11 @@
     			getPluginVersion(Settings.getBimSurferApiAddress(), function(apiVersion){
     				var jsToLoad = [];
 					if (Settings.useCompressedResources()) {
-						jsToLoad.push(Settings.getBimSurferApiAddress() + "bimsurfer.min.js?_v=" + apiVersion);
+                        jsToLoad = jsToLoad.concat([
+                            Settings.getBimSurferApiAddress() + "lib/hammer/touch-emulator.js?_v=" + apiVersion, 
+                            Settings.getBimSurferApiAddress() + "lib/hammer/hammer.min.js?_v=" + apiVersion, 
+                            Settings.getBimSurferApiAddress() + "bimsurfer.min.js?_v=" + apiVersion
+                        ]);
 					} else {
 		    			jsToLoad = jsToLoad.concat([
 		    	   		    Settings.getBimSurferApiAddress() + "api/BIMSURFER.js?_v=" + apiVersion, 
