@@ -271,7 +271,6 @@ li.treenode {
 	top: -1px;
 	margin: 0;
 	padding: 0;
-	width: 200px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;

@@ -233,6 +233,7 @@ function RightPanel(cd, main, project, projectPage) {
 			othis.tabChanger.changeTab($(".button3d"), o.threeDView, $(".threedview"), function(){
 				o.threeDView.load();
 			}, function(){
+				o.threeDView.resizeClick();
 				if (callback != null) {
 					callback();
 				}
@@ -247,6 +248,7 @@ function RightPanel(cd, main, project, projectPage) {
 				return o.threeDView;
 			}, function(){
 				o.threeDView.load();
+				o.threeDView.resizeClick();
 				if (callback != null) {
 					callback();
 				}

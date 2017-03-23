@@ -9,7 +9,7 @@
 		<div class="buttons">
 			<button class="ih btn btnScreenShot">Screenshot</button>
 			<button class="btn btn-default glyphicon viewbutton glyphicon-resize-full btnResize" title="Show &quot;full screen&quot;"></button>
-			<button class="btn btn-default glyphicon viewbutton glyphicon-wrench btnViewOptions" data-toggle="dropdown" title="Change between triangles/lines"></button>
+			<button class="btn btn-default glyphicon viewbutton glyphicon-wrench btnViewOptions" data-toggle="dropdown" title="Change between triangles/lines" style="display: none;"></button>
 		</div>
 		<div class="panel panel-default visualization ih">
 			<div class="panel-heading">
@@ -408,9 +408,12 @@ function ThreeDView(containerDiv, parent, main) {
 	this.resize = function(){
 		var resizeBtn = containerDiv.find(".btnResize");
 		var fullscreen = !resizeBtn.hasClass("glyphicon-resize-full");
-		var width = Math.round($(window).width() / 3 * 2 - 29);
-		$(".overlay-controls").css("top", fullscreen ? 10 : 120);
-		var height = ($(window).height() - $(".navbar").outerHeight() - $(".navbar-header").outerHeight() - $(".rightpanel .panel-heading").outerHeight() - 7) + (fullscreen ? 113 : 0);
+		var width = Math.round($(window).width() / 4 * 3 - 30);
+		if ($(window).width() < 992) {
+			width = Math.round($(window).width() - 32);
+		}
+		$(".overlay-controls").css("top", fullscreen ? 10 : ($(".navbar").outerHeight() == 0 ? 50 : 120));
+		var height = ($(window).height() - ($(".navbar").outerHeight() != 0 ? $(".navbar").outerHeight() : 30) - $(".navbar-header").outerHeight() - $(".rightpanel .panel-heading").outerHeight() - 7) + (fullscreen ? ($(".navbar-header").outerHeight()+$(".rightpanel .panel-heading").outerHeight()) : 0);
 		$("div#viewport").width(width + "px");
 		$("div#viewport").height((height - 1) + "px");
 		o.viewer.resize($('div#viewport').width(), $('div#viewport').height());

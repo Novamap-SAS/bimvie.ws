@@ -1,8 +1,8 @@
 <div class="project">
 	<div class="row">
-		<div class="col-md-4 navigatorWrapper">
+		<div class="col-md-3 hidden-xs hidden-sm navigatorWrapper">
 		</div>
-		<div class="col-md-8 rightCol">
+		<div class="col-md-9 rightCol">
 			<div class="rightpanel ih">
 			</div>
 		</div>
@@ -488,11 +488,13 @@ function Project(containerDiv, main, project) {
 						othis.rightPanel.selectedRevision = data;
 						othis.rightPanel.show();
 						containerDiv.find(".rightCol > .details").show();
+						othis.rightPanel.showThreeD();
 						promise.fire();
 					});
 				} else {
 					othis.rightPanel.show();
 					containerDiv.find(".rightCol > .details").show();
+					othis.rightPanel.showThreeD();
 					promise.fire();
 				}
 			});

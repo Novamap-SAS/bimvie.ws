@@ -214,6 +214,7 @@
 		    						$.removeCookie("address" + window.document.location.port, {});
 		    						$.removeCookie("username" + window.document.location.port, {});
 		    						$.removeCookie("autologin" + window.document.location.port, {});
+			    					Global.sessionId = null;
 		    						Global.lastKey = null;
 		    					} else {
 		    						Global.lastKey = e.keyCode;
@@ -254,27 +255,44 @@
 		    				$(".sidespan").empty();
 		    				Global.history = pushInitialState();
 		    				var notLoggedInFunction = function(address){
-		    					if (Global.history.page == "Login") {
-		    						$(".indexcontainer").load(Global.baseDir + "login.html", function(){
-		    							othis.current = new Login(address);
-		    						});
-		    					} else if (Global.history.page == "SelectServer") {
-		    						$(".indexcontainer").load(Global.baseDir + "selectserver.html", function(){
-		    							othis.current = new SelectServer(null);
-		    						});
-		    					} else if (Global.history.page == "Register") {
-		    						$(".indexcontainer").load(Global.baseDir + "register.html", function(){
-		    							othis.current = new Register($(this));
-		    						});
-		    					} else if (Global.history.page == "ResetPassword") {
-		    						$(".indexcontainer").load(Global.baseDir + "resetpassword.html", function(){
-		    							othis.current = new ResetPassword($(this), null);
-		    						});
-		    					} else {
-		    						$(".indexcontainer").load(Global.baseDir + "login.html", function(){
-		    							othis.current = new Login(address, null, window.location.href);
-		    						});
-		    					}
+								var username = getParameterByName("username");
+								var password = getParameterByName("password");
+								Global.sessionId = getParameterByName("sessionid");
+								if ((username != null) && (password != null)) {
+									Global.bimServerApi.login(username, password, function(data){
+										// Session cookie
+										$.cookie("autologin" + window.document.location.port, Global.bimServerApi.token, { });
+										$.cookie("address" + window.document.location.port, Global.bimServerApi.baseUrl, { });
+										Global.bimServerApi.resolveUser(function(user){
+											if (user != null) {
+												location.reload();
+											}
+										});
+									});
+								}
+								else {
+			    					if (Global.history.page == "Login") {
+			    						$(".indexcontainer").load(Global.baseDir + "login.html", function(){
+			    							othis.current = new Login(address);
+			    						});
+			    					} else if (Global.history.page == "SelectServer") {
+			    						$(".indexcontainer").load(Global.baseDir + "selectserver.html", function(){
+			    							othis.current = new SelectServer(null);
+			    						});
+			    					} else if (Global.history.page == "Register") {
+			    						$(".indexcontainer").load(Global.baseDir + "register.html", function(){
+			    							othis.current = new Register($(this));
+			    						});
+			    					} else if (Global.history.page == "ResetPassword") {
+			    						$(".indexcontainer").load(Global.baseDir + "resetpassword.html", function(){
+			    							othis.current = new ResetPassword($(this), null);
+			    						});
+			    					} else {
+			    						$(".indexcontainer").load(Global.baseDir + "login.html", function(){
+			    							othis.current = new Login(address, null, window.location.href);
+			    						});
+			    					}
+			    				}
 		    				};
 		    				
 		    				var successFunction = function(address){
@@ -302,6 +320,7 @@
 		    					$.removeCookie("username" + window.document.location.port, {});
 		    					$.removeCookie("autologin" + window.document.location.port, {});
 		    					$.removeCookie("address" + window.document.location.port, {});
+		    					Global.sessionId = null;
 		    				};
 
 		    				var address = getParameterByName("address");
@@ -336,6 +355,7 @@
 		    		    });
 
 		    			Global.bimServerApi = null;
+		    			Global.sessionId = null;
 		    			Global.objectcache = {};
 		    			Global.timeoutId;
 		    			
@@ -431,6 +451,7 @@
 		    				$.removeCookie("username" + window.document.location.port, {});
 		    				$.removeCookie("autologin" + window.document.location.port, {});
 		    				$.removeCookie("address" + window.document.location.port, {});
+	    					Global.sessionId = null;
 		    				$(".indexcontainer").load(Global.baseDir + "login.html", function(){
 		    					new Login();
 		    				});

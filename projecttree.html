@@ -72,13 +72,16 @@ function ProjectTree(containerDiv, parent, options, selected) {
 			node.hide();
 		}
 		if (project.nrSubProjects == 0 || (project.subProjects != null && project.subProjects.length == 0)) {
-			if (roid != -1) {
+			if (true) {
 				node.onLoad(function(){
 					var promise = othis.loadProjectTree(project, roid, node, types);
 					promise.done(function(){
+						othis.toggleEye(node, 0);
 					});
 					return promise;
 				});
+				node.doneLoading();
+				node.open();
 			}
 		} else {
 			node.doneLoading();
